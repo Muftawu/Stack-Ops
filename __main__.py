@@ -11,7 +11,7 @@ clock = pygame.time.Clock()
 
 def main(expression):
       data_dict = {i:ch for i, ch in enumerate([d for d in expression].__reversed__())}
-      print(data_dict)
+      print(data_dict, len(data_dict))
 
       num_cells = polish_notation(len(data_dict))
       run = True
@@ -32,6 +32,7 @@ def main(expression):
 
       # get text display centers
       text_display_centers = [stacks[0].STACK_CELL_CENTER[i] for i in data_dict]
+      print(text_display_centers)
 
       # stack pointer container
       pointers = [master_pointer]
@@ -55,11 +56,13 @@ def main(expression):
             # simulation title bar / details 
             render_text(win, TITLE_FONT, f'Expression => {expression}', 'white', WIN_WIDTH//2-0.3*WIN_WIDTH, EXPRESSION_TITLE_Y) 
                         
-            # draw stack 
-            for j, stack in enumerate(stacks):
+            # draw stack and stack cell data
+            stack_xs = [i for i in range(250, 250*len(data_dict), 200)]
+            for j, (stack, stack_x) in enumerate(zip(stacks, stack_xs)):
                   stack.draw_stack()  
+                  [render_text(win, TEXT_FONT, data_dict[idx], 'white', (stack_x+STACK_CELL_DATA_OFFSET_X), y-CELL_TEXT_OFFSET_Y) for idx, y in enumerate(text_display_centers)]
                   render_text(win, STACK_LABEL_FONT, f'Stack {j+1}', 'white', stack.x-15, stack.y+WIN_HEIGHT-200)
-    
+
 
             # draw pointers
             for pointer in pointers:
@@ -68,14 +71,8 @@ def main(expression):
             # show cell centers of stack 
             stack.show_cell_center()
 
-            # arrange data in stack cells
-            x = master_pointer.X_OFFSET+master_pointer.WIDTH+110
-            [render_text(win, TEXT_FONT, data_dict[idx], 'white', x, y-CELL_TEXT_OFFSET_Y) for idx, y in enumerate(text_display_centers)]
-
-
             pygame.display.update()
 
-
 if __name__ == "__main__":
-      expression = '12+48/6'
+      expression = '12+48*7'
       main(expression)

@@ -1,9 +1,10 @@
 from __init__ import * 
 
 class Pointer:
-      HEIGHT = 50
-      WIDTH = 100
-      X_OFFSET = HEIGHT 
+      HEIGHT = 25
+      WIDTH = 55
+      ARROW_WIDTH_SHRINK_SIZE = 120
+      X_OFFSET = HEIGHT + ARROW_WIDTH_SHRINK_SIZE
       POINTER_TIP_X = 250
       POINTER_TIP_Y = [150, 250, 350, 450, 550, 650, 750]
             
